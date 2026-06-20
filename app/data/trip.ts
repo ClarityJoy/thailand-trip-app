@@ -105,7 +105,7 @@ export type DocItem = {
 // ------------------------------------------------------------
 export const TRIP = {
   title: "תאילנד 2026",
-  travelers: "אסף + הבת (12)",
+  travelers: "אסף ושירה",
   startDate: "2026-07-03",
   endDate: "2026-07-17",
   totalDays: 15,
@@ -217,30 +217,31 @@ export const FLIGHTS: Flight[] = [
   },
   {
     id: "bkk-usm",
-    number: "טיסה פנימית",
-    airline: "לבחירה (Bangkok Airways / AirAsia)",
+    number: "PG 107",
+    airline: "Bangkok Airways · Airbus A319",
     fromCode: "BKK",
     fromCity: "בנגקוק",
     toCode: "USM",
     toCity: "קו סמוי",
     date: "2026-07-04",
-    depart: "—",
-    arrive: "—",
-    status: "tobook",
-    note: "המשך במעבורת לקו טאו",
+    depart: "07:10",
+    arrive: "08:15",
+    status: "booked",
+    note: "ישירה 1ש'05ד' · המשך במעבורת לקו טאו",
   },
   {
     id: "usm-bkk",
-    number: "טיסה פנימית",
-    airline: "לבחירה (Bangkok Airways / AirAsia)",
+    number: "PG 166",
+    airline: "Bangkok Airways · Airbus A319",
     fromCode: "USM",
     fromCity: "קו סמוי",
     toCode: "BKK",
     toCity: "בנגקוק",
     date: "2026-07-14",
-    depart: "—",
-    arrive: "—",
-    status: "tobook",
+    depart: "17:25",
+    arrive: "18:40",
+    status: "booked",
+    note: "ישירה 1ש'15ד'",
   },
   {
     id: "ey403",
@@ -331,7 +332,7 @@ export const ITINERARY: TripDay[] = [
     cityId: "kohtao",
     label: "מעבר לקו טאו",
     items: [
-      { id: "d2-1", title: "טיסה פנימית בנגקוק → קו סמוי", type: "flight", place: "BKK → USM", note: "לסגור כרטיס" },
+      { id: "d2-1", time: "07:10", title: "טיסה PG 107 · בנגקוק → קו סמוי", type: "flight", place: "BKK → USM", note: "Bangkok Airways · נחיתה 08:15" },
       { id: "d2-2", title: "מעבורת לקו טאו", type: "ferry", place: "קו סמוי → קו טאו" },
       { id: "d2-3", title: "צ'ק-אין · Sairee Cottage Resort", type: "hotel", place: "קו טאו", coords: { lat: 10.099, lng: 99.838 } },
     ],
@@ -424,7 +425,7 @@ export const ITINERARY: TripDay[] = [
     cityId: "bangkok",
     label: "חזרה לבנגקוק",
     items: [
-      { id: "d12-1", title: "טיסה פנימית קו סמוי → בנגקוק", type: "flight", place: "USM → BKK", note: "לסגור כרטיס" },
+      { id: "d12-1", time: "17:25", title: "טיסה PG 166 · קו סמוי → בנגקוק", type: "flight", place: "USM → BKK", note: "Bangkok Airways · נחיתה 18:40" },
       { id: "d12-2", title: "צ'ק-אין · Radisson Blu Plaza Bangkok", type: "hotel", place: "בנגקוק", coords: { lat: 13.722, lng: 100.564 } },
     ],
   },
@@ -491,10 +492,10 @@ export const EMERGENCY: EmergencyContact[] = [
   { id: "e6", label: "מוקד חירום קונסולרי (ישראל)", phone: "+97235303155", group: "embassy", note: "מטה לשכת המצב" },
   { id: "e7", label: "Onyx Divers — מועדון צלילה", phone: "", group: "diving", note: "להשלים מספר מקומי" },
   { id: "e8", label: "DAN — חירום צלילה", phone: "+6628061513", group: "diving", note: "תאונות דקומפרסיה" },
-  { id: "e9", label: "The Park Nine Hotel", phone: "", group: "hotel", note: "להשלים מהאישור" },
-  { id: "e10", label: "Sairee Cottage Resort", phone: "", group: "hotel", note: "להשלים מהאישור" },
-  { id: "e11", label: "Peace Garden Resort", phone: "", group: "hotel", note: "להשלים מהאישור" },
-  { id: "e12", label: "Radisson Blu Plaza Bangkok", phone: "+6623028888", group: "hotel" },
+  { id: "e9", label: "The Park Nine Suvarnabhumi", phone: "+6620199111", group: "hotel", note: "ליד שדה התעופה · שאטל חינם" },
+  { id: "e10", label: "Sairee Cottage Resort", phone: "+6677456126", group: "hotel", note: "קו טאו · חוף סאריי" },
+  { id: "e11", label: "Peace Garden Resort", phone: "", group: "hotel", note: "בּוֹפוּט, קו סמוי · להשלים מהאישור" },
+  { id: "e12", label: "Radisson Blu Plaza Bangkok", phone: "+6623023333", group: "hotel", note: "סוקומוויט סוי 27" },
 ];
 
 // ------------------------------------------------------------
@@ -530,8 +531,28 @@ export const EXPENSE_CATS: { id: ExpenseCat; label: string; emoji: string }[] = 
 export type SeedExpense = { id: string; label: string; cat: ExpenseCat; amountILS: number };
 
 export const SEED_EXPENSES: SeedExpense[] = [
-  { id: "x1", label: "מעבורת Lomprayah", cat: "transport", amountILS: 126 },
-  { id: "x2", label: "Elephant Jungle Sanctuary", cat: "activities", amountILS: 555 }, // ~$149 → ₪
+  // טיסות
+  { id: "xf1", label: "טיסות בינלאומיות (הלוך-חזור)", cat: "flights", amountILS: 5587.0 },
+  { id: "xf2", label: "טיסה פנימית — אבא (נקודות Etihad)", cat: "flights", amountILS: 11.21 },
+  { id: "xf3", label: "טיסה פנימית — שירה", cat: "flights", amountILS: 442.39 },
+  { id: "xf4", label: "טיסה פנימית חזרה לבנגקוק", cat: "flights", amountILS: 410.29 },
+  // מלונות
+  { id: "xh1", label: "מלון בנגקוק (Park Nine)", cat: "hotels", amountILS: 231.01 },
+  { id: "xh2", label: "מלון קו סמוי (הזמנה שבוטלה)", cat: "hotels", amountILS: 230.84 },
+  { id: "xh3", label: "מלון קו טאו (Sairee · 5 לילות)", cat: "hotels", amountILS: 2193.47 },
+  { id: "xh4", label: "מלון קו סמוי (Peace Garden · 5 לילות)", cat: "hotels", amountILS: 1097.68 },
+  { id: "xh5", label: "מלון בנגקוק (Radisson · 3 לילות)", cat: "hotels", amountILS: 895.1 },
+  // פעילויות
+  { id: "xa1", label: "פארק פילים", cat: "activities", amountILS: 144.7 },
+  { id: "xa2", label: "ספורט ימי (אופנוע ים)", cat: "activities", amountILS: 1182.18 },
+  { id: "xa3", label: "שיעור בישול תאי", cat: "activities", amountILS: 515.58 },
+  { id: "xa4", label: "סיור ג'יפים (נזיר מומיה)", cat: "activities", amountILS: 327.7 },
+  { id: "xa5", label: "קאיקים", cat: "activities", amountILS: 337.7 },
+  { id: "xa6", label: "סיור צלילה/שנורקל לאיים", cat: "activities", amountILS: 339.18 },
+  { id: "xa7", label: "אומגה", cat: "activities", amountILS: 334.7 },
+  // שונות + תחבורה
+  { id: "xo1", label: "שונות", cat: "other", amountILS: 552.4 },
+  { id: "xt1", label: "מעבורת Lomprayah (קו טאו→סמוי)", cat: "transport", amountILS: 126 },
 ];
 
 // יעד תקציב כולל (לעריכה)
