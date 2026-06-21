@@ -3,10 +3,11 @@ import { useState } from "react";
 import { DESTINATIONS, Destination } from "../data/trip";
 import { ScreenHeader, Card, SectionTitle } from "../components/ui";
 import { DestScene } from "../components/DestScene";
+import { PodcastCard } from "../components/PodcastCard";
 import { mapsUrl } from "./itemIcon";
-import { Lightbulb, Info, ListChecks, MapPin } from "lucide-react";
+import { Lightbulb, Info, ListChecks, MapPin, ChevronLeft } from "lucide-react";
 
-export default function Guides() {
+export default function Guides({ go }: { go: (t: string, p?: any) => void }) {
   const [open, setOpen] = useState<Destination | null>(null);
 
   if (open) {
@@ -19,12 +20,28 @@ export default function Guides() {
             <span className="absolute bottom-2 left-3 text-5xl drop-shadow">{open.emoji}</span>
           </div>
 
+          {open.id === "kohtao" && (
+            <Card
+              className="p-4 bg-gradient-to-br from-cyan-600 to-teal-700 text-white flex items-center gap-3"
+              onClick={() => go("diving")}
+            >
+              <span className="text-3xl">🤿</span>
+              <div className="flex-1">
+                <p className="font-display">הקורס של שירה</p>
+                <p className="text-xs text-white/85">Open Water SSI — תוכנית, סימני ידיים, בטיחות ויומן צלילות</p>
+              </div>
+              <ChevronLeft className="w-5 h-5 text-white/80" />
+            </Card>
+          )}
+
           <Card className="p-4">
             <div className="flex items-center gap-2 text-ink/80 font-display mb-1">
               <Info className="w-4 h-4" /> קצת היסטוריה
             </div>
             <p className="text-sm text-ink/70 leading-relaxed">{open.history}</p>
           </Card>
+
+          <PodcastCard title={open.podcast.title} script={open.podcast.script} />
 
           <SectionTitle>
             <span className="flex items-center gap-1.5"><Lightbulb className="w-4 h-4" /> ידעת ש…?</span>

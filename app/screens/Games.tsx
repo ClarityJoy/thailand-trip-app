@@ -1,11 +1,11 @@
 "use client";
 import { useState } from "react";
-import { TRIVIA, PHRASES, MEMORY_ICONS } from "../data/trip";
+import { TRIVIA, DIVE_TRIVIA, PHRASES, MEMORY_ICONS, TRIP, TriviaQ } from "../data/trip";
 import { ScreenHeader, Card, Pill } from "../components/ui";
 import { useLocal } from "../lib/store";
 import { Star, Volume2, RotateCcw } from "lucide-react";
 
-type Game = "menu" | "trivia" | "phrases" | "memory";
+type Game = "menu" | "trivia" | "dive" | "phrases" | "memory";
 
 export default function Games({ onBack }: { onBack: () => void }) {
   const [game, setGame] = useState<Game>("menu");
@@ -14,7 +14,8 @@ export default function Games({ onBack }: { onBack: () => void }) {
   const award = (key: string, val: number) =>
     setStamps((p) => ({ ...p, [key]: Math.max(p[key] ?? 0, val) }));
 
-  if (game === "trivia") return <Trivia onBack={() => setGame("menu")} onWin={(s) => award("trivia", s)} />;
+  if (game === "trivia") return <Trivia title="טריוויה תאילנד" questions={TRIVIA} onBack={() => setGame("menu")} onWin={(s) => award("trivia", s)} />;
+  if (game === "dive") return <Trivia title="טריוויית צלילה" questions={DIVE_TRIVIA} onBack={() => setGame("menu")} onWin={(s) => award("dive", s)} />;
   if (game === "phrases") return <Phrases onBack={() => setGame("menu")} onWin={() => award("phrases", 1)} />;
   if (game === "memory") return <Memory onBack={() => setGame("menu")} onWin={() => award("memory", 1)} />;
 
@@ -26,14 +27,15 @@ export default function Games({ onBack }: { onBack: () => void }) {
       <div className="px-4 pt-3">
         <Card className="p-4 mb-4 bg-gradient-to-br from-amber-400 to-coral text-white flex items-center justify-between">
           <div>
-            <p className="text-white/80 text-sm">אספת עד עכשיו</p>
+            <p className="text-white/80 text-sm">הבולים של {TRIP.kidName}</p>
             <p className="font-display text-3xl">{totalStamps} בולים</p>
           </div>
           <span className="text-5xl">🏆</span>
         </Card>
 
         {[
-          { id: "trivia", e: "❓", t: "טריוויה תאילנד", d: "8 שאלות עם עובדה מפתיעה אחרי כל תשובה", got: stamps.trivia ?? 0, max: TRIVIA.length },
+          { id: "trivia", e: "❓", t: "טריוויה תאילנד", d: "שאלות עם עובדה מפתיעה אחרי כל תשובה", got: stamps.trivia ?? 0, max: TRIVIA.length },
+          { id: "dive", e: "🤿", t: "טריוויית צלילה", d: "כל מה שלמדת על הים והשונית", got: stamps.dive ?? 0, max: DIVE_TRIVIA.length },
           { id: "phrases", e: "🗣️", t: "איך אומרים…?", d: "מילון תאי קטן עם הגייה", got: stamps.phrases ?? 0, max: 1 },
           { id: "memory", e: "🃏", t: "זיכרון תאי", d: "מצאו את כל הזוגות", got: stamps.memory ?? 0, max: 1 },
         ].map((g) => (
@@ -52,12 +54,13 @@ export default function Games({ onBack }: { onBack: () => void }) {
 }
 
 // ---------- טריוויה ----------
-function Trivia({ onBack, onWin }: { onBack: () => void; onWin: (s: number) => void }) {
+function Trivia({ title, questions, onBack, onWin }: { title: string; questions: TriviaQ[]; onBack: () => void; onWin: (s: number) => void }) {
   const [i, setI] = useState(0);
   const [picked, setPicked] = useState<number | null>(null);
   const [score, setScore] = useState(0);
-  const q = TRIVIA[i];
-  const done = i >= TRIVIA.length;
+  const q = questions[i];
+  const done = i >= questions.length;
+  const passMark = Math.ceil(questions.length * 0.75);
 
   const choose = (idx: number) => {
     if (picked !== null) return;
@@ -65,7 +68,7 @@ function Trivia({ onBack, onWin }: { onBack: () => void; onWin: (s: number) => v
     if (idx === q.answer) setScore((s) => s + 1);
   };
   const next = () => {
-    if (i + 1 >= TRIVIA.length) onWin(score + (picked === q.answer ? 0 : 0));
+    if (i + 1 >= questions.length) onWin(score);
     setPicked(null);
     setI((x) => x + 1);
   };
@@ -73,11 +76,11 @@ function Trivia({ onBack, onWin }: { onBack: () => void; onWin: (s: number) => v
   if (done) {
     return (
       <div className="pb-6">
-        <ScreenHeader title="טריוויה" onBack={onBack} />
+        <ScreenHeader title={title} onBack={onBack} />
         <div className="px-4 pt-10 text-center">
-          <div className="text-7xl">{score >= 6 ? "🏆" : "🎉"}</div>
-          <p className="font-display text-3xl text-ink mt-3">{score} / {TRIVIA.length}</p>
-          <p className="text-ink/60 mt-1">{score >= 6 ? "מומחה לתאילנד!" : "כל הכבוד!"}</p>
+          <div className="text-7xl">{score >= passMark ? "🏆" : "🎉"}</div>
+          <p className="font-display text-3xl text-ink mt-3">{score} / {questions.length}</p>
+          <p className="text-ink/60 mt-1">{score >= passMark ? "מדהים!" : "כל הכבוד!"}</p>
           <button onClick={() => { setI(0); setScore(0); setPicked(null); }} className="mt-6 px-5 py-2.5 rounded-xl bg-teal-600 text-white inline-flex items-center gap-2">
             <RotateCcw className="w-4 h-4" /> שחק שוב
           </button>
@@ -88,10 +91,10 @@ function Trivia({ onBack, onWin }: { onBack: () => void; onWin: (s: number) => v
 
   return (
     <div className="pb-6">
-      <ScreenHeader title="טריוויה" subtitle={`שאלה ${i + 1} מתוך ${TRIVIA.length}`} onBack={onBack} />
+      <ScreenHeader title={title} subtitle={`שאלה ${i + 1} מתוך ${questions.length}`} onBack={onBack} />
       <div className="px-4 pt-4">
         <div className="h-1.5 bg-ink/5 rounded-full overflow-hidden mb-4">
-          <div className="h-full bg-coral rounded-full transition-all" style={{ width: `${(i / TRIVIA.length) * 100}%` }} />
+          <div className="h-full bg-coral rounded-full transition-all" style={{ width: `${(i / questions.length) * 100}%` }} />
         </div>
         <Card className="p-5">
           <p className="font-display text-lg text-ink mb-4">{q.q}</p>
@@ -117,7 +120,7 @@ function Trivia({ onBack, onWin }: { onBack: () => void; onWin: (s: number) => v
               <p className="text-sm text-amber-900">💡 {q.fact}</p>
             </Card>
             <button onClick={next} className="w-full mt-3 py-3 rounded-2xl bg-teal-600 text-white font-medium">
-              {i + 1 >= TRIVIA.length ? "סיום" : "הבא ›"}
+              {i + 1 >= questions.length ? "סיום" : "הבא ›"}
             </button>
           </>
         )}

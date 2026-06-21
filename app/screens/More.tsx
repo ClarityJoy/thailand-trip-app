@@ -4,6 +4,8 @@ import { TRIP } from "../data/trip";
 import { ChevronLeft } from "lucide-react";
 
 const ITEMS = [
+  { go: "diving", e: "🤿", t: "הקורס של שירה", d: "קורס צלילה Open Water בקו טאו" },
+  { go: "memories", e: "📸", t: "זיכרונות", d: "תיעוד הרגעים היפים מהטיול" },
   { go: "hotels", e: "✈️", t: "טיסות ומלונות", d: "כל ההזמנות במקום אחד" },
   { go: "attractions", e: "✅", t: "אטרקציות", d: "צ'ק-ליסט של מה שעושים" },
   { go: "packing", e: "🧳", t: "רשימת אריזה", d: "מה לוקחים לתאילנד" },

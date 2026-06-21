@@ -32,7 +32,8 @@ export default function Home({ go }: { go: (t: string, p?: any) => void }) {
 
         {phase === "before" && (
           <div className="mt-6">
-            <p className="text-white/80">עוד</p>
+            <p className="text-white text-lg">היי {TRIP.kidName}! 👋</p>
+            <p className="text-white/80 mt-3">עוד</p>
             <div className="flex items-end gap-2">
               <span className="font-display text-7xl leading-none">{daysUntilTrip()}</span>
               <span className="text-2xl mb-2">ימים</span>
@@ -58,6 +59,9 @@ export default function Home({ go }: { go: (t: string, p?: any) => void }) {
           <div className="mt-6">
             <h1 className="font-display text-4xl">ברוכים השבים! 🇮🇱</h1>
             <p className="text-white/80 mt-2">מקווים שנהניתם בתאילנד. הזיכרונות נשארים כאן.</p>
+            <button onClick={() => go("memories")} className="mt-4 bg-white/15 rounded-xl px-4 py-2 text-sm">
+              📸 לצפייה בזיכרונות
+            </button>
           </div>
         )}
       </div>
@@ -73,6 +77,21 @@ export default function Home({ go }: { go: (t: string, p?: any) => void }) {
             </div>
           </div>
           <Pill tone="teal"><MapPin className="w-3 h-3" /> {dest.nameEn}</Pill>
+        </Card>
+      </div>
+
+      {/* באנר קורס הצלילה של שירה */}
+      <div className="px-4 mt-3">
+        <Card
+          className="p-4 bg-gradient-to-br from-cyan-600 to-teal-700 text-white flex items-center gap-3"
+          onClick={() => go("diving")}
+        >
+          <span className="text-3xl">🤿</span>
+          <div className="flex-1">
+            <p className="font-display">הקורס של {TRIP.kidName}</p>
+            <p className="text-xs text-white/80">Open Water בקו טאו — לו"ז, סימני ידיים ויומן צלילות</p>
+          </div>
+          <span className="text-white/70">‹</span>
         </Card>
       </div>
 
@@ -130,6 +149,8 @@ export default function Home({ go }: { go: (t: string, p?: any) => void }) {
             { t: "תקציב", e: "📊", go: "budget" },
             { t: "מסמכים", e: "🗂️", go: "documents" },
             { t: "חירום", e: "🆘", go: "emergency" },
+            { t: "אריזה", e: "🧳", go: "packing" },
+            { t: "זיכרונות", e: "📸", go: "memories" },
           ].map((s) => (
             <button
               key={s.go}
