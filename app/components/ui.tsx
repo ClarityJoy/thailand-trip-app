@@ -65,7 +65,7 @@ export function Pill({
   tone?: "teal" | "coral" | "amber" | "gray" | "sky";
 }) {
   const tones: Record<string, string> = {
-    teal: "bg-teal-50 text-teal-700",
+    teal: "bg-pink-50 text-pink-700",
     coral: "bg-coral/10 text-coral",
     amber: "bg-amber-50 text-amber-700",
     gray: "bg-ink/5 text-ink/60",

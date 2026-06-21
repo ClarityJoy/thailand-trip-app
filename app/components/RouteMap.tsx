@@ -45,16 +45,16 @@ export default function RouteMap() {
         attribution='&copy; OpenStreetMap'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
-      <Polyline positions={line} pathOptions={{ color: "#F4623A", weight: 3, dashArray: "6 8" }} />
+      <Polyline positions={line} pathOptions={{ color: "#EC4899", weight: 3, dashArray: "6 8" }} />
 
       {HOTELS.map((h) => (
-        <Marker key={h.id} position={[h.coords.lat, h.coords.lng]} icon={pin("🏨", "#0F766E")}>
+        <Marker key={h.id} position={[h.coords.lat, h.coords.lng]} icon={pin("🏨", "#DB2777")}>
           <Popup>
             <div style={{ direction: "rtl", textAlign: "right", minWidth: 160 }}>
               <strong>{h.name}</strong>
               <div style={{ fontSize: 12, color: "#666" }}>{h.region}</div>
               <div style={{ fontSize: 12 }}>{h.nights} לילות</div>
-              <a href={mapsUrl(h.coords.lat, h.coords.lng)} target="_blank" rel="noreferrer" style={{ color: "#0F766E" }}>
+              <a href={mapsUrl(h.coords.lat, h.coords.lng)} target="_blank" rel="noreferrer" style={{ color: "#DB2777" }}>
                 פתח ב-Google Maps ›
               </a>
             </div>
@@ -63,12 +63,12 @@ export default function RouteMap() {
       ))}
 
       {activities.map((a) => (
-        <Marker key={a.id} position={[a.coords!.lat, a.coords!.lng]} icon={pin("⭐", "#1E9BD7")}>
+        <Marker key={a.id} position={[a.coords!.lat, a.coords!.lng]} icon={pin("⭐", "#A855F7")}>
           <Popup>
             <div style={{ direction: "rtl", textAlign: "right", minWidth: 160 }}>
               <strong>{a.title}</strong>
               <div style={{ fontSize: 12, color: "#666" }}>{a.place}</div>
-              <a href={mapsUrl(a.coords!.lat, a.coords!.lng)} target="_blank" rel="noreferrer" style={{ color: "#0F766E" }}>
+              <a href={mapsUrl(a.coords!.lat, a.coords!.lng)} target="_blank" rel="noreferrer" style={{ color: "#DB2777" }}>
                 פתח ב-Google Maps ›
               </a>
             </div>
