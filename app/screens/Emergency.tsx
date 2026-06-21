@@ -35,14 +35,14 @@ export default function Emergency({ onBack }: { onBack: () => void }) {
                   const callable = !!c.phone;
                   const Inner = (
                     <div className={`flex items-center gap-3 p-3 ${i > 0 ? "border-t border-ink/5" : ""}`}>
-                      <div className={`w-9 h-9 rounded-full flex items-center justify-center shrink-0 ${callable ? "bg-teal-50 text-teal-700" : "bg-ink/5 text-ink/30"}`}>
+                      <div className={`w-9 h-9 rounded-full flex items-center justify-center shrink-0 ${callable ? "bg-pink-50 text-pink-700" : "bg-ink/5 text-ink/30"}`}>
                         <Phone className="w-4 h-4" />
                       </div>
                       <div className="flex-1 min-w-0">
                         <p className="text-sm text-ink">{c.label}</p>
                         {c.note && <p className="text-[11px] text-ink/40">{c.note}</p>}
                       </div>
-                      <span className={`text-sm font-medium ${callable ? "text-teal-700" : "text-ink/30"}`} dir="ltr">
+                      <span className={`text-sm font-medium ${callable ? "text-pink-700" : "text-ink/30"}`} dir="ltr">
                         {c.phone || "—"}
                       </span>
                     </div>

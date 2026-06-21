@@ -24,3 +24,12 @@ export function mapsUrl(lat?: number, lng?: number, q?: string) {
   }
   return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(q ?? "Thailand")}`;
 }
+
+// קישור למפת המכשיר (geo:) — נפתח באפליקציית המפות ועובד גם אופליין אם המפה נשמרה
+export function geoUrl(lat?: number, lng?: number, label?: string) {
+  if (lat != null && lng != null) {
+    const q = label ? `(${encodeURIComponent(label)})` : "";
+    return `geo:${lat},${lng}?q=${lat},${lng}${q}`;
+  }
+  return `geo:0,0?q=${encodeURIComponent(label ?? "Thailand")}`;
+}

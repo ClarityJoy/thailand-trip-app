@@ -20,7 +20,7 @@ export default function Packing({ onBack }: { onBack: () => void }) {
             <span className="text-2xl">{count === total ? "🧳✨" : "🧳"}</span>
           </div>
           <div className="h-2.5 bg-ink/5 rounded-full overflow-hidden">
-            <div className="h-full bg-teal-500 rounded-full transition-all" style={{ width: `${(count / total) * 100}%` }} />
+            <div className="h-full bg-pink-500 rounded-full transition-all" style={{ width: `${(count / total) * 100}%` }} />
           </div>
         </Card>
 
@@ -37,7 +37,7 @@ export default function Packing({ onBack }: { onBack: () => void }) {
                     onClick={() => setDone((p) => ({ ...p, [key]: !p[key] }))}
                     className={`w-full flex items-center gap-3 p-3 text-right ${i > 0 ? "border-t border-ink/5" : ""}`}
                   >
-                    <span className={`w-6 h-6 rounded-full flex items-center justify-center shrink-0 ${isDone ? "bg-teal-500 text-white" : "border-2 border-ink/15"}`}>
+                    <span className={`w-6 h-6 rounded-full flex items-center justify-center shrink-0 ${isDone ? "bg-pink-500 text-white" : "border-2 border-ink/15"}`}>
                       {isDone && <Check className="w-4 h-4" />}
                     </span>
                     <span className={`flex-1 text-sm ${isDone ? "line-through text-ink/35" : "text-ink"}`}>{it}</span>

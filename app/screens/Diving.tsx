@@ -36,7 +36,7 @@ export default function Diving({ onBack }: { onBack: () => void }) {
       <ScreenHeader title={`הקורס של ${TRIP.kidName} 🤿`} subtitle={`${DIVE_COURSE.title} · ${DIVE_COURSE.agency}`} onBack={onBack} />
       <div className="px-4 pt-3 space-y-4">
         {/* Hero */}
-        <Card className="p-5 bg-gradient-to-br from-cyan-600 to-teal-700 text-white">
+        <Card className="p-5 bg-gradient-to-br from-fuchsia-600 to-pink-700 text-white">
           <div className="flex items-center gap-2 mb-1">
             <GraduationCap className="w-5 h-5" />
             <span className="font-display text-lg">{DIVE_COURSE.title}</span>
@@ -55,7 +55,7 @@ export default function Diving({ onBack }: { onBack: () => void }) {
           <div className="space-y-2">
             {DIVE_DAYS.map((d, i) => (
               <Card key={d.date} className="p-3 flex gap-3">
-                <div className="w-9 h-9 rounded-full bg-cyan-50 text-cyan-700 flex items-center justify-center font-display shrink-0">
+                <div className="w-9 h-9 rounded-full bg-fuchsia-50 text-fuchsia-700 flex items-center justify-center font-display shrink-0">
                   {i + 1}
                 </div>
                 <div className="flex-1">
@@ -96,7 +96,7 @@ export default function Diving({ onBack }: { onBack: () => void }) {
           <Card className="p-4 space-y-2">
             {DIVE_RULES.map((r, i) => (
               <div key={i} className="flex gap-2 text-sm text-ink/75">
-                <span className="text-cyan-600 font-display">{i + 1}</span> {r}
+                <span className="text-fuchsia-600 font-display">{i + 1}</span> {r}
               </div>
             ))}
           </Card>
@@ -118,7 +118,7 @@ export default function Diving({ onBack }: { onBack: () => void }) {
                   key={c.name}
                   onClick={() => setSeen((p) => ({ ...p, [c.name]: !p[c.name] }))}
                   className={`flex items-center gap-2 p-3 rounded-2xl text-sm transition ${
-                    on ? "bg-cyan-500 text-white shadow-sm" : "bg-white text-ink/70 shadow-sm"
+                    on ? "bg-fuchsia-500 text-white shadow-sm" : "bg-white text-ink/70 shadow-sm"
                   }`}
                 >
                   <span className="text-2xl">{c.emoji}</span>
@@ -134,7 +134,7 @@ export default function Diving({ onBack }: { onBack: () => void }) {
         <div>
           <div className="flex items-center justify-between px-1 mb-2">
             <h2 className="font-display text-base text-ink/80">יומן הצלילות שלי</h2>
-            <button onClick={() => setShowForm((s) => !s)} className="flex items-center gap-1 text-sm text-cyan-700">
+            <button onClick={() => setShowForm((s) => !s)} className="flex items-center gap-1 text-sm text-fuchsia-700">
               <Plus className="w-4 h-4" /> צלילה חדשה
             </button>
           </div>
@@ -144,7 +144,7 @@ export default function Diving({ onBack }: { onBack: () => void }) {
               <input value={site} onChange={(e) => setSite(e.target.value)} placeholder="אתר הצלילה (לדוגמה: Japanese Gardens)" className="w-full bg-ink/5 rounded-xl px-3 py-2 text-sm outline-none" />
               <input value={depth} onChange={(e) => setDepth(e.target.value)} placeholder="עומק מקסימלי (מטר)" inputMode="decimal" className="w-full bg-ink/5 rounded-xl px-3 py-2 text-sm outline-none" />
               <textarea value={notes} onChange={(e) => setNotes(e.target.value)} placeholder="מה ראיתי / איך הרגשתי?" rows={2} className="w-full bg-ink/5 rounded-xl px-3 py-2 text-sm outline-none resize-none" />
-              <button onClick={addLog} className="w-full py-2 rounded-xl bg-cyan-600 text-white text-sm font-medium">שמירה ביומן</button>
+              <button onClick={addLog} className="w-full py-2 rounded-xl bg-fuchsia-600 text-white text-sm font-medium">שמירה ביומן</button>
             </Card>
           )}
 
@@ -156,7 +156,7 @@ export default function Diving({ onBack }: { onBack: () => void }) {
                 <Card key={l.id} className="p-3">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
-                      <span className="w-7 h-7 rounded-full bg-cyan-50 text-cyan-700 flex items-center justify-center text-xs font-display">#{logs.length - i}</span>
+                      <span className="w-7 h-7 rounded-full bg-fuchsia-50 text-fuchsia-700 flex items-center justify-center text-xs font-display">#{logs.length - i}</span>
                       <span className="font-medium text-ink text-sm">{l.site}</span>
                     </div>
                     <div className="flex items-center gap-2">

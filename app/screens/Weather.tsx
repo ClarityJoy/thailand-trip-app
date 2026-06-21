@@ -23,7 +23,7 @@ export default function Weather({ onBack }: { onBack: () => void }) {
               key={d.id}
               onClick={() => setCid(d.id)}
               className={`flex-1 py-2 rounded-xl text-sm transition ${
-                d.id === cid ? "bg-teal-600 text-white" : "bg-white text-ink/70 shadow-sm"
+                d.id === cid ? "bg-pink-600 text-white" : "bg-white text-ink/70 shadow-sm"
               }`}
             >
               {d.emoji} {d.name}
@@ -31,7 +31,7 @@ export default function Weather({ onBack }: { onBack: () => void }) {
           ))}
         </div>
 
-        <Card className="p-6 text-center bg-gradient-to-br from-sky-400 to-teal-500 text-white">
+        <Card className="p-6 text-center bg-gradient-to-br from-sky-400 to-pink-500 text-white">
           {loading ? (
             <p>טוען…</p>
           ) : (

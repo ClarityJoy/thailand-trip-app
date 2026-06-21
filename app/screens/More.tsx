@@ -24,7 +24,7 @@ export default function More({ go }: { go: (t: string) => void }) {
       <div className="px-4 pt-3 space-y-2.5">
         {ITEMS.map((it) => (
           <Card key={it.go} className="p-3.5 flex items-center gap-3" onClick={() => go(it.go)}>
-            <span className="w-11 h-11 rounded-xl bg-teal-50 flex items-center justify-center text-2xl shrink-0">
+            <span className="w-11 h-11 rounded-xl bg-pink-50 flex items-center justify-center text-2xl shrink-0">
               {it.e}
             </span>
             <div className="flex-1 min-w-0">

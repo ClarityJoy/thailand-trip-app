@@ -85,7 +85,7 @@ function Trivia({ title, questions, onBack, onWin }: { title: string; questions:
           <div className="text-7xl">{score >= passMark ? "🏆" : "🎉"}</div>
           <p className="font-display text-3xl text-ink mt-3">{score} / {questions.length}</p>
           <p className="text-ink/60 mt-1">{score >= passMark ? "מדהים!" : "כל הכבוד!"}</p>
-          <button onClick={() => { setI(0); setScore(0); setPicked(null); }} className="mt-6 px-5 py-2.5 rounded-xl bg-teal-600 text-white inline-flex items-center gap-2">
+          <button onClick={() => { setI(0); setScore(0); setPicked(null); }} className="mt-6 px-5 py-2.5 rounded-xl bg-pink-600 text-white inline-flex items-center gap-2">
             <RotateCcw className="w-4 h-4" /> שחק שוב
           </button>
         </div>
@@ -106,7 +106,7 @@ function Trivia({ title, questions, onBack, onWin }: { title: string; questions:
             {q.options.map((o, idx) => {
               let cls = "bg-ink/5 text-ink";
               if (picked !== null) {
-                if (idx === q.answer) cls = "bg-teal-500 text-white";
+                if (idx === q.answer) cls = "bg-pink-500 text-white";
                 else if (idx === picked) cls = "bg-coral/80 text-white";
                 else cls = "bg-ink/5 text-ink/40";
               }
@@ -123,7 +123,7 @@ function Trivia({ title, questions, onBack, onWin }: { title: string; questions:
             <Card className="p-4 mt-3 bg-amber-50">
               <p className="text-sm text-amber-900">💡 {q.fact}</p>
             </Card>
-            <button onClick={next} className="w-full mt-3 py-3 rounded-2xl bg-teal-600 text-white font-medium">
+            <button onClick={next} className="w-full mt-3 py-3 rounded-2xl bg-pink-600 text-white font-medium">
               {i + 1 >= questions.length ? "סיום" : "הבא ›"}
             </button>
           </>
@@ -150,7 +150,7 @@ function Phrases({ onBack, onWin }: { onBack: () => void; onWin: () => void }) {
           <Card key={i} className="p-4 flex items-center gap-3">
             <button
               onClick={() => speak(p.thai)}
-              className="w-10 h-10 rounded-full bg-teal-50 text-teal-700 flex items-center justify-center shrink-0 active:scale-95"
+              className="w-10 h-10 rounded-full bg-pink-50 text-pink-700 flex items-center justify-center shrink-0 active:scale-95"
             >
               <Volume2 className="w-5 h-5" />
             </button>
@@ -224,8 +224,8 @@ function Memory({ onBack, onWin }: { onBack: () => void; onWin: () => void }) {
       />
       <div className="px-4 pt-4">
         {won && (
-          <Card className="p-4 mb-4 text-center bg-teal-50">
-            <p className="font-display text-xl text-teal-800">🏆 כל הזוגות נמצאו ב-{moves} מהלכים!</p>
+          <Card className="p-4 mb-4 text-center bg-pink-50">
+            <p className="font-display text-xl text-pink-800">🏆 כל הזוגות נמצאו ב-{moves} מהלכים!</p>
           </Card>
         )}
         <div className="grid grid-cols-4 gap-3">
@@ -236,7 +236,7 @@ function Memory({ onBack, onWin }: { onBack: () => void; onWin: () => void }) {
                 key={c.id}
                 onClick={() => flip(c.id, c.e)}
                 className={`aspect-square rounded-2xl flex items-center justify-center text-3xl transition-all ${
-                  isUp ? "bg-white shadow-sm" : "bg-teal-600"
+                  isUp ? "bg-white shadow-sm" : "bg-pink-600"
                 }`}
               >
                 {isUp ? c.e : ""}
@@ -277,7 +277,7 @@ function PriceGame({ onBack, onWin }: { onBack: () => void; onWin: (s: number) =
           <div className="text-7xl">{score >= passMark ? "🏆" : "🎉"}</div>
           <p className="font-display text-3xl text-ink mt-3">{score} / {PRICE_ITEMS.length}</p>
           <p className="text-ink/60 mt-1">{score >= passMark ? "אלוף קניות!" : "כל הכבוד!"}</p>
-          <button onClick={() => { setI(0); setScore(0); setPicked(null); }} className="mt-6 px-5 py-2.5 rounded-xl bg-teal-600 text-white inline-flex items-center gap-2">
+          <button onClick={() => { setI(0); setScore(0); setPicked(null); }} className="mt-6 px-5 py-2.5 rounded-xl bg-pink-600 text-white inline-flex items-center gap-2">
             <RotateCcw className="w-4 h-4" /> שחק שוב
           </button>
         </div>
@@ -300,7 +300,7 @@ function PriceGame({ onBack, onWin }: { onBack: () => void; onWin: (s: number) =
             {item.options.map((o) => {
               let cls = "bg-ink/5 text-ink";
               if (picked !== null) {
-                if (o === item.answer) cls = "bg-teal-500 text-white";
+                if (o === item.answer) cls = "bg-pink-500 text-white";
                 else if (o === picked) cls = "bg-coral/80 text-white";
                 else cls = "bg-ink/5 text-ink/40";
               }
@@ -320,7 +320,7 @@ function PriceGame({ onBack, onWin }: { onBack: () => void; onWin: (s: number) =
                 ฿{item.answer} ≈ ₪{(item.answer * 0.1).toFixed(0)} בערך.
               </p>
             </Card>
-            <button onClick={next} className="w-full mt-3 py-3 rounded-2xl bg-teal-600 text-white font-medium">
+            <button onClick={next} className="w-full mt-3 py-3 rounded-2xl bg-pink-600 text-white font-medium">
               {i + 1 >= PRICE_ITEMS.length ? "סיום" : "הבא ›"}
             </button>
           </>

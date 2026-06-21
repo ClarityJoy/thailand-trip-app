@@ -3,7 +3,7 @@ import { useState } from "react";
 import { SEED_EXPENSES, EXPENSE_CATS, BUDGET_TARGET_ILS, ExpenseCat } from "../data/trip";
 import { ScreenHeader, Card } from "../components/ui";
 import { useLocal } from "../lib/store";
-import { Plus, Trash2 } from "lucide-react";
+import { Plus, Trash2, Calculator } from "lucide-react";
 
 type Exp = { id: string; label: string; cat: ExpenseCat; amountILS: number };
 
@@ -13,6 +13,7 @@ export default function Budget({ onBack }: { onBack: () => void }) {
   const [label, setLabel] = useState("");
   const [amount, setAmount] = useState("");
   const [cat, setCat] = useState<ExpenseCat>("food");
+  const [days, setDays] = useState("10"); // ימים שנותרו לחישוב
 
   const all: Exp[] = [...SEED_EXPENSES, ...extra];
   const total = all.reduce((s, e) => s + e.amountILS, 0);
@@ -36,7 +37,7 @@ export default function Budget({ onBack }: { onBack: () => void }) {
     <div className="pb-6">
       <ScreenHeader title="תקציב והוצאות" subtitle={`יעד: ₪${BUDGET_TARGET_ILS.toLocaleString()}`} onBack={onBack} />
       <div className="px-4 pt-3">
-        <Card className="p-5 bg-gradient-to-br from-teal-600 to-teal-700 text-white">
+        <Card className="p-5 bg-gradient-to-br from-pink-600 to-pink-700 text-white">
           <p className="text-white/70 text-sm">סה"כ הוצאנו</p>
           <p className="font-display text-4xl">₪{total.toLocaleString()}</p>
           <div className="h-2 bg-white/20 rounded-full overflow-hidden mt-3">
@@ -60,9 +61,42 @@ export default function Budget({ onBack }: { onBack: () => void }) {
           ))}
         </div>
 
+        {/* מחשבון תקציב יומי */}
+        <h2 className="font-display text-base text-ink/80 px-1 mt-5 mb-2 flex items-center gap-1.5">
+          <Calculator className="w-4 h-4" /> מחשבון תקציב
+        </h2>
+        <Card className="p-4">
+          <div className="flex items-center justify-between">
+            <span className="text-sm text-ink/70">כמה ימים נשארו?</span>
+            <input
+              value={days}
+              onChange={(e) => setDays(e.target.value.replace(/[^\d]/g, ""))}
+              inputMode="numeric"
+              className="w-20 text-center bg-ink/5 rounded-xl px-2 py-1.5 font-display text-lg outline-none"
+            />
+          </div>
+          <div className="grid grid-cols-2 gap-2 mt-3">
+            <div className="bg-pink-50 rounded-xl p-3 text-center">
+              <div className="text-xs text-pink-700/70">לכל יום</div>
+              <div className="font-display text-2xl text-pink-700">
+                ₪{Math.max(0, Math.round(remaining / Math.max(1, parseInt(days) || 1))).toLocaleString()}
+              </div>
+            </div>
+            <div className="bg-sky-50 rounded-xl p-3 text-center">
+              <div className="text-xs text-sky-700/70">ליום, לאדם</div>
+              <div className="font-display text-2xl text-sky-700">
+                ₪{Math.max(0, Math.round(remaining / Math.max(1, parseInt(days) || 1) / 2)).toLocaleString()}
+              </div>
+            </div>
+          </div>
+          <p className="text-[11px] text-ink/40 mt-2">
+            מחושב מהיתרה (₪{Math.max(0, remaining).toLocaleString()}) חלקי מספר הימים. עדכנו את הימים כדי לתכנן.
+          </p>
+        </Card>
+
         <div className="flex items-center justify-between px-1 mt-5 mb-2">
           <h2 className="font-display text-base text-ink/80">הוצאות</h2>
-          <button onClick={() => setShowForm((s) => !s)} className="flex items-center gap-1 text-sm text-teal-700">
+          <button onClick={() => setShowForm((s) => !s)} className="flex items-center gap-1 text-sm text-pink-700">
             <Plus className="w-4 h-4" /> הוסף
           </button>
         </div>
@@ -93,7 +127,7 @@ export default function Budget({ onBack }: { onBack: () => void }) {
                 ))}
               </select>
             </div>
-            <button onClick={add} className="w-full py-2 rounded-xl bg-teal-600 text-white text-sm font-medium">
+            <button onClick={add} className="w-full py-2 rounded-xl bg-pink-600 text-white text-sm font-medium">
               שמור הוצאה
             </button>
           </Card>

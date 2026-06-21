@@ -68,7 +68,7 @@ export default function Memories({ onBack }: { onBack: () => void }) {
         subtitle="הרגעים הכי יפים מהטיול"
         onBack={onBack}
         right={
-          <button onClick={() => setOpen((s) => !s)} className="w-9 h-9 rounded-full bg-teal-600 text-white flex items-center justify-center shadow-sm">
+          <button onClick={() => setOpen((s) => !s)} className="w-9 h-9 rounded-full bg-pink-600 text-white flex items-center justify-center shadow-sm">
             <Plus className="w-5 h-5" />
           </button>
         }
@@ -81,7 +81,7 @@ export default function Memories({ onBack }: { onBack: () => void }) {
                 <button
                   key={m}
                   onClick={() => setMood(m)}
-                  className={`text-2xl w-9 h-9 rounded-full flex items-center justify-center transition ${mood === m ? "bg-teal-100 scale-110" : ""}`}
+                  className={`text-2xl w-9 h-9 rounded-full flex items-center justify-center transition ${mood === m ? "bg-pink-100 scale-110" : ""}`}
                 >
                   {m}
                 </button>
@@ -105,7 +105,7 @@ export default function Memories({ onBack }: { onBack: () => void }) {
             <input ref={fileRef} type="file" accept="image/*" className="hidden" onChange={(e) => onPhoto(e.target.files?.[0])} />
 
             {quotaErr && <p className="text-xs text-coral">אין מספיק מקום לשמירת התמונה — נסה בלי תמונה או מחק זיכרונות ישנים.</p>}
-            <button onClick={save} className="w-full py-2.5 rounded-xl bg-teal-600 text-white text-sm font-medium">שמירת הזיכרון</button>
+            <button onClick={save} className="w-full py-2.5 rounded-xl bg-pink-600 text-white text-sm font-medium">שמירת הזיכרון</button>
           </Card>
         )}
 

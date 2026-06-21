@@ -22,7 +22,7 @@ export default function Attractions({ onBack }: { onBack: () => void }) {
           </div>
           <div className="h-2.5 bg-ink/5 rounded-full overflow-hidden">
             <div
-              className="h-full bg-teal-500 rounded-full transition-all"
+              className="h-full bg-pink-500 rounded-full transition-all"
               style={{ width: `${(count / total) * 100}%` }}
             />
           </div>
@@ -49,7 +49,7 @@ export default function Attractions({ onBack }: { onBack: () => void }) {
                       </span>
                       <span
                         className={`w-6 h-6 rounded-full flex items-center justify-center shrink-0 ${
-                          isDone ? "bg-teal-500 text-white" : "border-2 border-ink/15"
+                          isDone ? "bg-pink-500 text-white" : "border-2 border-ink/15"
                         }`}
                       >
                         {isDone && <Check className="w-4 h-4" />}

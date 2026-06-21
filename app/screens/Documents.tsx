@@ -21,9 +21,9 @@ export default function Documents({ onBack }: { onBack: () => void }) {
     <div className="pb-6">
       <ScreenHeader title="כספת מסמכים" subtitle="זמין גם בלי רשת — סמנו מה מוכן" onBack={onBack} />
       <div className="px-4 pt-3">
-        <Card className="p-3 mb-4 flex items-center gap-2 bg-teal-50">
-          <ShieldCheck className="w-5 h-5 text-teal-700 shrink-0" />
-          <p className="text-xs text-teal-800">
+        <Card className="p-3 mb-4 flex items-center gap-2 bg-pink-50">
+          <ShieldCheck className="w-5 h-5 text-pink-700 shrink-0" />
+          <p className="text-xs text-pink-800">
             רשימת הצ'ק של כל המסמכים החשובים. מומלץ לצלם כל מסמך ולשמור גם בענן.
           </p>
         </Card>
@@ -44,7 +44,7 @@ export default function Documents({ onBack }: { onBack: () => void }) {
                   >
                     <span
                       className={`w-6 h-6 rounded-full flex items-center justify-center shrink-0 ${
-                        isReady ? "bg-teal-500 text-white" : "border-2 border-ink/15"
+                        isReady ? "bg-pink-500 text-white" : "border-2 border-ink/15"
                       }`}
                     >
                       {isReady && <Check className="w-4 h-4" />}

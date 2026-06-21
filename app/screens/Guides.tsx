@@ -25,7 +25,7 @@ export default function Guides({ go }: { go: (t: string, p?: any) => void }) {
               <Card className="p-4 space-y-2">
                 {s.items.map((it, j) => (
                   <div key={j} className="flex gap-2 text-sm text-ink/75">
-                    <span className="text-teal-600 shrink-0">•</span>
+                    <span className="text-pink-600 shrink-0">•</span>
                     <span>{it}</span>
                   </div>
                 ))}
@@ -49,7 +49,7 @@ export default function Guides({ go }: { go: (t: string, p?: any) => void }) {
 
           {open.id === "kohtao" && (
             <Card
-              className="p-4 bg-gradient-to-br from-cyan-600 to-teal-700 text-white flex items-center gap-3"
+              className="p-4 bg-gradient-to-br from-fuchsia-600 to-pink-700 text-white flex items-center gap-3"
               onClick={() => go("diving")}
             >
               <span className="text-3xl">🤿</span>
@@ -88,7 +88,7 @@ export default function Guides({ go }: { go: (t: string, p?: any) => void }) {
           <Card className="p-4 space-y-2">
             {open.tips.map((t, i) => (
               <div key={i} className="flex gap-2 text-sm text-ink/75">
-                <span className="text-teal-600">✓</span> {t}
+                <span className="text-pink-600">✓</span> {t}
               </div>
             ))}
           </Card>
@@ -108,7 +108,7 @@ export default function Guides({ go }: { go: (t: string, p?: any) => void }) {
             href={mapsUrl(open.coords.lat, open.coords.lng, open.nameEn)}
             target="_blank"
             rel="noreferrer"
-            className="block text-center py-3 rounded-2xl bg-teal-600 text-white font-medium"
+            className="block text-center py-3 rounded-2xl bg-pink-600 text-white font-medium"
           >
             פתח את {open.name} ב-Google Maps
           </a>
@@ -140,7 +140,7 @@ export default function Guides({ go }: { go: (t: string, p?: any) => void }) {
         <SectionTitle>מדריכים נוספים</SectionTitle>
         {TOPIC_GUIDES.map((t) => (
           <Card key={t.id} className="p-3.5 flex items-center gap-3" onClick={() => setTopic(t)}>
-            <span className="w-11 h-11 rounded-xl bg-teal-50 flex items-center justify-center text-2xl shrink-0">
+            <span className="w-11 h-11 rounded-xl bg-pink-50 flex items-center justify-center text-2xl shrink-0">
               {t.emoji}
             </span>
             <div className="flex-1 min-w-0">

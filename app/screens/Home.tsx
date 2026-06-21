@@ -1,5 +1,5 @@
 "use client";
-import { TRIP, DESTINATIONS, ITINERARY } from "../data/trip";
+import { TRIP, DESTINATIONS, ITINERARY, FLIGHTS } from "../data/trip";
 import {
   daysUntilTrip,
   tripPhase,
@@ -7,9 +7,12 @@ import {
   currentHotel,
   currentDayIndex,
   hebDate,
+  today,
 } from "../lib/dates";
 import { useWeather, weatherInfo } from "../lib/live";
 import { Card, Pill } from "../components/ui";
+import { BoardingPass } from "../components/BoardingPass";
+import { ThailandArt } from "../components/ThailandArt";
 import { itemIcon } from "./itemIcon";
 import { MapPin, Plane, CalendarDays, Hotel as HotelIcon } from "lucide-react";
 
@@ -22,13 +25,17 @@ export default function Home({ go }: { go: (t: string, p?: any) => void }) {
   const dest = DESTINATIONS.find((d) => d.id === cityId)!;
   const { data: weather } = useWeather(dest.coords);
   const wi = weather ? weatherInfo(weather.code) : null;
+  const nowYmd = today().toISOString().slice(0, 10);
+  const nextFlight = FLIGHTS.find((f) => f.date >= nowYmd && f.depart !== "—") ?? FLIGHTS[0];
 
   return (
     <div className="pb-6">
-      {/* כותרת מלון/גיבור */}
-      <div className="relative bg-gradient-to-b from-teal-600 to-teal-700 text-white px-5 pt-6 pb-16 rounded-b-[32px] overflow-hidden">
-        <div className="absolute -top-6 -left-6 text-[120px] opacity-10 select-none">{dest.emoji}</div>
-        <p className="text-white/70 text-sm">{TRIP.title} · {TRIP.travelers}</p>
+      {/* כותרת מלון/גיבור עם איור תאילנד */}
+      <div className="relative text-white px-5 pt-6 pb-16 rounded-b-[32px] overflow-hidden">
+        <ThailandArt className="absolute inset-0 w-full h-full" />
+        <div className="absolute inset-0 bg-gradient-to-b from-pink-900/75 via-pink-800/45 to-pink-700/35" />
+        <div className="relative">
+        <p className="text-white/80 text-sm">{TRIP.title} · {TRIP.travelers}</p>
 
         {phase === "before" && (
           <div className="mt-6">
@@ -64,6 +71,7 @@ export default function Home({ go }: { go: (t: string, p?: any) => void }) {
             </button>
           </div>
         )}
+        </div>
       </div>
 
       {/* כרטיס מזג אוויר צף */}
@@ -80,10 +88,25 @@ export default function Home({ go }: { go: (t: string, p?: any) => void }) {
         </Card>
       </div>
 
+      {/* כרטיס טיסה */}
+      <div className="px-4 mt-3">
+        <BoardingPass
+          fromCode={nextFlight.fromCode}
+          fromCity={nextFlight.fromCity}
+          toCode={nextFlight.toCode}
+          toCity={nextFlight.toCity}
+          date={nextFlight.date}
+          depart={nextFlight.depart}
+          arrive={nextFlight.arrive}
+          number={nextFlight.number}
+          airline={nextFlight.airline}
+        />
+      </div>
+
       {/* באנר קורס הצלילה של שירה */}
       <div className="px-4 mt-3">
         <Card
-          className="p-4 bg-gradient-to-br from-cyan-600 to-teal-700 text-white flex items-center gap-3"
+          className="p-4 bg-gradient-to-br from-fuchsia-600 to-pink-700 text-white flex items-center gap-3"
           onClick={() => go("diving")}
         >
           <span className="text-3xl">🤿</span>
@@ -101,7 +124,7 @@ export default function Home({ go }: { go: (t: string, p?: any) => void }) {
           <h2 className="font-display text-base text-ink/80 flex items-center gap-1.5">
             <CalendarDays className="w-4 h-4" /> {phase === "before" ? "מתחילים בקרוב" : "התוכנית להיום"}
           </h2>
-          <button className="text-xs text-teal-700" onClick={() => go("itinerary")}>כל המסלול ›</button>
+          <button className="text-xs text-pink-700" onClick={() => go("itinerary")}>כל המסלול ›</button>
         </div>
 
         {phase === "during" && plan ? (
@@ -110,7 +133,7 @@ export default function Home({ go }: { go: (t: string, p?: any) => void }) {
               const Icon = itemIcon(it.type);
               return (
                 <Card key={it.id} className="p-3 flex items-center gap-3" onClick={() => go("itinerary")}>
-                  <div className="w-10 h-10 rounded-xl bg-teal-50 text-teal-700 flex items-center justify-center shrink-0">
+                  <div className="w-10 h-10 rounded-xl bg-pink-50 text-pink-700 flex items-center justify-center shrink-0">
                     <Icon className="w-5 h-5" />
                   </div>
                   <div className="flex-1 min-w-0">
@@ -125,7 +148,7 @@ export default function Home({ go }: { go: (t: string, p?: any) => void }) {
         ) : (
           <Card className="p-4" onClick={() => go("itinerary")}>
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-teal-50 text-teal-700 flex items-center justify-center">
+              <div className="w-10 h-10 rounded-xl bg-pink-50 text-pink-700 flex items-center justify-center">
                 <Plane className="w-5 h-5" />
               </div>
               <div>
