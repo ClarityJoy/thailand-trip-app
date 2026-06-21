@@ -67,7 +67,7 @@ export default function Home({ go }: { go: (t: string, p?: any) => void }) {
       </div>
 
       {/* כרטיס מזג אוויר צף */}
-      <div className="px-4 -mt-10">
+      <div className="px-4 -mt-10 relative z-10">
         <Card className="p-4 flex items-center justify-between" onClick={() => go("weather")}>
           <div className="flex items-center gap-3">
             <span className="text-4xl">{wi?.emoji ?? "🌡️"}</span>
