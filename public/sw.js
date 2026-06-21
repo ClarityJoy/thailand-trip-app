@@ -1,5 +1,5 @@
 // Service Worker — תמיכה באופליין לאפליקציית הטיול
-const CACHE = "thai26-v1";
+const CACHE = "thai26-v2";
 const SHELL = ["/", "/manifest.json", "/icons/icon.svg"];
 
 self.addEventListener("install", (e) => {
