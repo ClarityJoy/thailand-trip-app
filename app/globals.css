@@ -11,8 +11,8 @@
 html,
 body {
   color-scheme: light only;
-  background: #fbf6ec;
-  color: #1c2b2a;
+  background: #fff1f7;
+  color: #3b2a3f;
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
   overscroll-behavior-y: none;

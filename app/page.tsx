@@ -81,7 +81,7 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen w-full flex flex-col items-center bg-gradient-to-b from-teal-900 to-teal-950 py-0 sm:py-6">
+    <div className="min-h-screen w-full flex flex-col items-center bg-gradient-to-b from-pink-900 to-pink-950 py-0 sm:py-6">
       <InstallHint />
       <div
         className="relative bg-black sm:rounded-[44px] sm:p-2 sm:shadow-2xl w-full sm:w-auto"
@@ -109,8 +109,8 @@ export default function App() {
                         onClick={() => go(t.id)}
                         className="flex-1 flex flex-col items-center gap-0.5 py-2"
                       >
-                        <t.Icon className={`w-5 h-5 ${active ? "text-teal-600" : "text-ink/35"}`} />
-                        <span className={`text-[10px] ${active ? "text-teal-600 font-medium" : "text-ink/40"}`}>
+                        <t.Icon className={`w-5 h-5 ${active ? "text-pink-600" : "text-ink/35"}`} />
+                        <span className={`text-[10px] ${active ? "text-pink-600 font-medium" : "text-ink/40"}`}>
                           {t.label}
                         </span>
                       </button>
@@ -145,7 +145,7 @@ function InstallHint() {
       <p className="flex-1 text-xs text-ink/70">התקינו את האפליקציה למסך הבית — עובדת גם בלי אינטרנט.</p>
       <button
         onClick={async () => { await evt?.prompt(); setShow(false); }}
-        className="px-3 py-1.5 rounded-xl bg-teal-600 text-white text-sm"
+        className="px-3 py-1.5 rounded-xl bg-pink-600 text-white text-sm"
       >
         התקן
       </button>
