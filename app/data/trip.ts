@@ -19,6 +19,7 @@ export type ItineraryItem = {
   title: string;
   type: ItemType;
   place?: string;
+  address?: string;
   coords?: LatLng;
   note?: string;
   priceILS?: number;
