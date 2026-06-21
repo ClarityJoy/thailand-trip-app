@@ -1,11 +1,11 @@
 "use client";
 import { useState } from "react";
-import { TRIVIA, DIVE_TRIVIA, PHRASES, MEMORY_ICONS, TRIP, TriviaQ } from "../data/trip";
+import { TRIVIA, DIVE_TRIVIA, FOOD_TRIVIA, PRICE_ITEMS, PHRASES, MEMORY_ICONS, TRIP, TriviaQ } from "../data/trip";
 import { ScreenHeader, Card, Pill } from "../components/ui";
 import { useLocal } from "../lib/store";
 import { Star, Volume2, RotateCcw } from "lucide-react";
 
-type Game = "menu" | "trivia" | "dive" | "phrases" | "memory";
+type Game = "menu" | "trivia" | "dive" | "food" | "price" | "phrases" | "memory";
 
 export default function Games({ onBack }: { onBack: () => void }) {
   const [game, setGame] = useState<Game>("menu");
@@ -16,6 +16,8 @@ export default function Games({ onBack }: { onBack: () => void }) {
 
   if (game === "trivia") return <Trivia title="טריוויה תאילנד" questions={TRIVIA} onBack={() => setGame("menu")} onWin={(s) => award("trivia", s)} />;
   if (game === "dive") return <Trivia title="טריוויית צלילה" questions={DIVE_TRIVIA} onBack={() => setGame("menu")} onWin={(s) => award("dive", s)} />;
+  if (game === "food") return <Trivia title="אוכל ותרבות" questions={FOOD_TRIVIA} onBack={() => setGame("menu")} onWin={(s) => award("food", s)} />;
+  if (game === "price") return <PriceGame onBack={() => setGame("menu")} onWin={(s) => award("price", s)} />;
   if (game === "phrases") return <Phrases onBack={() => setGame("menu")} onWin={() => award("phrases", 1)} />;
   if (game === "memory") return <Memory onBack={() => setGame("menu")} onWin={() => award("memory", 1)} />;
 
@@ -36,6 +38,8 @@ export default function Games({ onBack }: { onBack: () => void }) {
         {[
           { id: "trivia", e: "❓", t: "טריוויה תאילנד", d: "שאלות עם עובדה מפתיעה אחרי כל תשובה", got: stamps.trivia ?? 0, max: TRIVIA.length },
           { id: "dive", e: "🤿", t: "טריוויית צלילה", d: "כל מה שלמדת על הים והשונית", got: stamps.dive ?? 0, max: DIVE_TRIVIA.length },
+          { id: "food", e: "🍜", t: "אוכל ותרבות", d: "מאכלים, נימוסים ומנהגים תאיים", got: stamps.food ?? 0, max: FOOD_TRIVIA.length },
+          { id: "price", e: "💰", t: "כמה זה בבָּאט?", d: "נחשו את המחיר ולמדו על הכסף", got: stamps.price ?? 0, max: PRICE_ITEMS.length },
           { id: "phrases", e: "🗣️", t: "איך אומרים…?", d: "מילון תאי קטן עם הגייה", got: stamps.phrases ?? 0, max: 1 },
           { id: "memory", e: "🃏", t: "זיכרון תאי", d: "מצאו את כל הזוגות", got: stamps.memory ?? 0, max: 1 },
         ].map((g) => (
@@ -240,6 +244,87 @@ function Memory({ onBack, onWin }: { onBack: () => void; onWin: () => void }) {
             );
           })}
         </div>
+      </div>
+    </div>
+  );
+}
+
+// ---------- כמה זה בבָּאט? ----------
+function PriceGame({ onBack, onWin }: { onBack: () => void; onWin: (s: number) => void }) {
+  const [i, setI] = useState(0);
+  const [picked, setPicked] = useState<number | null>(null);
+  const [score, setScore] = useState(0);
+  const item = PRICE_ITEMS[i];
+  const done = i >= PRICE_ITEMS.length;
+  const passMark = Math.ceil(PRICE_ITEMS.length * 0.75);
+
+  const choose = (val: number) => {
+    if (picked !== null) return;
+    setPicked(val);
+    if (val === item.answer) setScore((s) => s + 1);
+  };
+  const next = () => {
+    if (i + 1 >= PRICE_ITEMS.length) onWin(score);
+    setPicked(null);
+    setI((x) => x + 1);
+  };
+
+  if (done) {
+    return (
+      <div className="pb-6">
+        <ScreenHeader title="כמה זה בבָּאט?" onBack={onBack} />
+        <div className="px-4 pt-10 text-center">
+          <div className="text-7xl">{score >= passMark ? "🏆" : "🎉"}</div>
+          <p className="font-display text-3xl text-ink mt-3">{score} / {PRICE_ITEMS.length}</p>
+          <p className="text-ink/60 mt-1">{score >= passMark ? "אלוף קניות!" : "כל הכבוד!"}</p>
+          <button onClick={() => { setI(0); setScore(0); setPicked(null); }} className="mt-6 px-5 py-2.5 rounded-xl bg-teal-600 text-white inline-flex items-center gap-2">
+            <RotateCcw className="w-4 h-4" /> שחק שוב
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="pb-6">
+      <ScreenHeader title="כמה זה בבָּאט?" subtitle={`${i + 1} מתוך ${PRICE_ITEMS.length}`} onBack={onBack} />
+      <div className="px-4 pt-4">
+        <div className="h-1.5 bg-ink/5 rounded-full overflow-hidden mb-4">
+          <div className="h-full bg-amber-400 rounded-full transition-all" style={{ width: `${(i / PRICE_ITEMS.length) * 100}%` }} />
+        </div>
+        <Card className="p-6 text-center">
+          <div className="text-7xl">{item.emoji}</div>
+          <p className="font-display text-xl text-ink mt-2">{item.name}</p>
+          <p className="text-sm text-ink/50">כמה זה עולה בערך?</p>
+          <div className="grid grid-cols-3 gap-2 mt-4">
+            {item.options.map((o) => {
+              let cls = "bg-ink/5 text-ink";
+              if (picked !== null) {
+                if (o === item.answer) cls = "bg-teal-500 text-white";
+                else if (o === picked) cls = "bg-coral/80 text-white";
+                else cls = "bg-ink/5 text-ink/40";
+              }
+              return (
+                <button key={o} onClick={() => choose(o)} className={`py-3 rounded-xl font-display text-lg transition ${cls}`}>
+                  ฿{o}
+                </button>
+              );
+            })}
+          </div>
+        </Card>
+        {picked !== null && (
+          <>
+            <Card className="p-4 mt-3 bg-amber-50">
+              <p className="text-sm text-amber-900">
+                {picked === item.answer ? "נכון! " : `המחיר הנכון הוא ฿${item.answer}. `}
+                ฿{item.answer} ≈ ₪{(item.answer * 0.1).toFixed(0)} בערך.
+              </p>
+            </Card>
+            <button onClick={next} className="w-full mt-3 py-3 rounded-2xl bg-teal-600 text-white font-medium">
+              {i + 1 >= PRICE_ITEMS.length ? "סיום" : "הבא ›"}
+            </button>
+          </>
+        )}
       </div>
     </div>
   );

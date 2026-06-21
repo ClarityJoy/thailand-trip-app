@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import { DESTINATIONS, Destination } from "../data/trip";
+import { DESTINATIONS, Destination, TOPIC_GUIDES, TopicGuide } from "../data/trip";
 import { ScreenHeader, Card, SectionTitle } from "../components/ui";
 import { DestScene } from "../components/DestScene";
 import { PodcastCard } from "../components/PodcastCard";
@@ -9,6 +9,33 @@ import { Lightbulb, Info, ListChecks, MapPin, ChevronLeft } from "lucide-react";
 
 export default function Guides({ go }: { go: (t: string, p?: any) => void }) {
   const [open, setOpen] = useState<Destination | null>(null);
+  const [topic, setTopic] = useState<TopicGuide | null>(null);
+
+  if (topic) {
+    return (
+      <div className="pb-8">
+        <ScreenHeader title={`${topic.title} ${topic.emoji}`} onBack={() => setTopic(null)} />
+        <div className="px-4 pt-3 space-y-4">
+          <Card className="p-4">
+            <p className="text-sm text-ink/75 leading-relaxed">{topic.intro}</p>
+          </Card>
+          {topic.sections.map((s, i) => (
+            <div key={i}>
+              <SectionTitle>{s.heading}</SectionTitle>
+              <Card className="p-4 space-y-2">
+                {s.items.map((it, j) => (
+                  <div key={j} className="flex gap-2 text-sm text-ink/75">
+                    <span className="text-teal-600 shrink-0">•</span>
+                    <span>{it}</span>
+                  </div>
+                ))}
+              </Card>
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  }
 
   if (open) {
     return (
@@ -92,7 +119,7 @@ export default function Guides({ go }: { go: (t: string, p?: any) => void }) {
 
   return (
     <div className="pb-6">
-      <ScreenHeader title="מדריכי יעד" subtitle="כל מקום שאנחנו מבקרים בו" />
+      <ScreenHeader title="מדריכים" subtitle="היעדים שלנו ועוד" />
       <div className="px-4 pt-3 space-y-3">
         {DESTINATIONS.map((d) => (
           <Card key={d.id} className="overflow-hidden" onClick={() => setOpen(d)}>
@@ -107,6 +134,20 @@ export default function Guides({ go }: { go: (t: string, p?: any) => void }) {
                 <p className="text-sm text-ink/70 line-clamp-2">{d.tagline}</p>
               </div>
             </div>
+          </Card>
+        ))}
+
+        <SectionTitle>מדריכים נוספים</SectionTitle>
+        {TOPIC_GUIDES.map((t) => (
+          <Card key={t.id} className="p-3.5 flex items-center gap-3" onClick={() => setTopic(t)}>
+            <span className="w-11 h-11 rounded-xl bg-teal-50 flex items-center justify-center text-2xl shrink-0">
+              {t.emoji}
+            </span>
+            <div className="flex-1 min-w-0">
+              <p className="font-display text-ink">{t.title}</p>
+              <p className="text-xs text-ink/50 line-clamp-1">{t.intro}</p>
+            </div>
+            <ChevronLeft className="w-5 h-5 text-ink/25" />
           </Card>
         ))}
       </div>
