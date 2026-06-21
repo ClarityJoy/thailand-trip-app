@@ -3,12 +3,14 @@
 @tailwind utilities;
 
 :root {
+  color-scheme: light only;
   --font-sans: "Assistant", "Heebo", "Rubik", "Segoe UI", system-ui, -apple-system, sans-serif;
   --font-display: "Rubik", "Heebo", "Assistant", "Segoe UI", system-ui, sans-serif;
 }
 
 html,
 body {
+  color-scheme: light only;
   background: #fbf6ec;
   color: #1c2b2a;
   font-family: var(--font-sans);
