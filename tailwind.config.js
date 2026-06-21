@@ -4,9 +4,9 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        sand: "#FBF6EC",
-        ink: "#1C2B2A",
-        coral: "#F4623A",
+        sand: "#FFF1F7",
+        ink: "#3B2A3F",
+        coral: "#EC4899",
       },
       fontFamily: {
         display: ["var(--font-display)"],
