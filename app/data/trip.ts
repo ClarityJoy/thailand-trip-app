@@ -608,7 +608,117 @@ export const SEED_EXPENSES: SeedExpense[] = [
 ];
 
 // יעד תקציב כולל (לעריכה)
-export const BUDGET_TARGET_ILS = 25000;
+export const BUDGET_TARGET_ILS = 27000;
+
+// ------------------------------------------------------------
+// סקר מחירים אמיתי בתאילנד (2025) — לתצוגה ולמתכנן התקציב
+// מקורות: streetfoodblog, numbeo, hikersbay, thailandroutes, theblondtravels
+// ------------------------------------------------------------
+export type PriceRow = { n: string; lo: number; hi: number }; // במחירי בָּאט (฿)
+export type PriceGroup = { cat: string; emoji: string; rows: PriceRow[] };
+
+export const PRICE_SURVEY: PriceGroup[] = [
+  {
+    cat: "אוכל ושתייה",
+    emoji: "🍜",
+    rows: [
+      { n: "מנת אוכל רחוב (פאד תאי/אורז)", lo: 40, hi: 70 },
+      { n: "מסעדה מקומית — מנה עיקרית", lo: 120, hi: 250 },
+      { n: "מסעדה תיירותית — ארוחה", lo: 300, hi: 600 },
+      { n: "מנגו עם אורז דביק", lo: 50, hi: 80 },
+      { n: "קפה (קפוצ'ינו)", lo: 50, hi: 80 },
+      { n: "שייק/מיץ פירות טרי", lo: 40, hi: 70 },
+      { n: "בקבוק מים", lo: 7, hi: 15 },
+      { n: "בירה גדולה", lo: 80, hi: 120 },
+    ],
+  },
+  {
+    cat: "ביגוד וקניות",
+    emoji: "🛍️",
+    rows: [
+      { n: "מכנסי פיל", lo: 70, hi: 250 },
+      { n: "חולצת טי", lo: 100, hi: 200 },
+      { n: "שמלה/חולצה בשוק", lo: 150, hi: 400 },
+      { n: "מחזיק מפתחות מזכרת", lo: 50, hi: 100 },
+      { n: "פסלון פיל מזכרת", lo: 150, hi: 250 },
+      { n: "מגנט למקרר", lo: 30, hi: 60 },
+    ],
+  },
+  {
+    cat: "תחבורה",
+    emoji: "🚐",
+    rows: [
+      { n: "סונגתאו (תחבורה משותפת)", lo: 20, hi: 40 },
+      { n: "טוק-טוק — נסיעה קצרה", lo: 60, hi: 150 },
+      { n: "מונית/Grab בעיר", lo: 60, hi: 200 },
+      { n: "רכבת BTS (בנגקוק)", lo: 17, hi: 65 },
+      { n: "מעבורת נהר", lo: 3, hi: 15 },
+      { n: "אופנוע-טקסי", lo: 20, hi: 50 },
+    ],
+  },
+  {
+    cat: "פעילויות וחוויות",
+    emoji: "🎟️",
+    rows: [
+      { n: "כניסה למקדש (וואט פו)", lo: 100, hi: 200 },
+      { n: "הארמון המלכותי הגדול", lo: 500, hi: 500 },
+      { n: "עיסוי תאי (שעה)", lo: 120, hi: 300 },
+      { n: "כניסה לאקווריום/אטרקציה", lo: 250, hi: 990 },
+    ],
+  },
+];
+
+// ------------------------------------------------------------
+// מתכנן תקציב — רמות הוצאה לפי קטגוריה (בָּאט)
+// ------------------------------------------------------------
+export type SpendLevel = { key: "low" | "mid" | "high"; label: string; thb: number };
+export type PlannerCat = { id: string; emoji: string; label: string; perPerson: boolean; levels: SpendLevel[] };
+
+// קטגוריות יומיות — ฿ לאדם ליום
+export const PLANNER_DAILY: PlannerCat[] = [
+  {
+    id: "food", emoji: "🍜", label: "אוכל", perPerson: true,
+    levels: [
+      { key: "low", label: "חסכוני · אוכל רחוב", thb: 300 },
+      { key: "mid", label: "מעורב · רחוב+מסעדות", thb: 600 },
+      { key: "high", label: "מפנק · מסעדות וקפה", thb: 1100 },
+    ],
+  },
+  {
+    id: "transport", emoji: "🚐", label: "תחבורה", perPerson: true,
+    levels: [
+      { key: "low", label: "חסכוני · ציבורי/הליכה", thb: 80 },
+      { key: "mid", label: "מעורב · קצת מוניות", thb: 200 },
+      { key: "high", label: "נוחות · Grab/מוניות", thb: 450 },
+    ],
+  },
+  {
+    id: "treats", emoji: "🥤", label: "חטיפים ושתייה", perPerson: true,
+    levels: [
+      { key: "low", label: "בסיסי · מים+חטיף", thb: 60 },
+      { key: "mid", label: "רגיל · קפה+פינוק", thb: 150 },
+      { key: "high", label: "מפנק · קפה/שייק/בר", thb: 350 },
+    ],
+  },
+  {
+    id: "extra", emoji: "🎟️", label: "כניסות ועיסויים", perPerson: true,
+    levels: [
+      { key: "low", label: "חסכוני · בעיקר חינם", thb: 80 },
+      { key: "mid", label: "רגיל · קצת כניסות/עיסוי", thb: 250 },
+      { key: "high", label: "הרבה חוויות", thb: 600 },
+    ],
+  },
+];
+
+// קניות ומזכרות — ฿ לכל הטיול, למשפחה
+export const PLANNER_SHOPPING: PlannerCat = {
+  id: "shopping", emoji: "🛍️", label: "קניות ומזכרות (כל הטיול)", perPerson: false,
+  levels: [
+    { key: "low", label: "מעט מזכרות", thb: 800 },
+    { key: "mid", label: "רגיל", thb: 2500 },
+    { key: "high", label: "שופינג רציני", thb: 6000 },
+  ],
+};
 
 // ------------------------------------------------------------
 // רשימת ציוד / אריזה (מותאם לטיול: טרופי, צלילה, עונת גשמים, ילדה בת 12)
